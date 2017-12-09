@@ -11,15 +11,14 @@ class ShopControl extends ShopControl_parent
 {
     protected function _runOnce()
     {
-        $oConf     = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $blDevMode = $oConf->getShopConfVar('blDevMode', null, 'module:ocb_cleartmp');
-        
-        
-        if ($blDevMode && !$oConf->isProductiveMode()) {
-            $sTmpDir = realpath($oConf->getShopConfVar('sCompileDir'));
-            $aFiles = glob($sTmpDir.'{/smarty/,/ocb_cache/,/}*{.php,.txt,.json}', GLOB_BRACE);
-            if (count($aFiles) > 0) {
-                foreach ($aFiles as $file) {
+        $config     = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $ocbcleartmpDevMode = $config->getShopConfVar('ocbcleartmpDevMode', null, 'module:ocb_cleartmp');
+
+        if ($ocbcleartmpDevMode && !$config->isProductiveMode()) {
+            $tmpDirectory = realpath($config->getShopConfVar('sCompileDir'));
+            $fles = glob($tmpDirectory.'{/smarty/,/ocb_cache/,/}*{.php,.txt,.json}', GLOB_BRACE);
+            if (count($fles) > 0) {
+                foreach ($fles as $file) {
                     @unlink($file);
                 }
             }

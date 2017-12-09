@@ -15,14 +15,14 @@ class NavigationController extends NavigationController_parent
      * @return string templatename
      */
     public function render() {
-        $sTpl = parent::render();
+        $template = parent::render();
 
         $this->_aViewData['prodmode'] = \OxidEsales\Eshop\Core\Registry::getConfig()->isProductiveMode();
 
-        if ('header.tpl' == $sTpl) {
+        if ('header.tpl' == $template) {
             return 'ocb_header.tpl';
         } else {
-            return $sTpl;
+            return $template;
         }
     }
 
@@ -33,22 +33,22 @@ class NavigationController extends NavigationController_parent
      * @return null
      */
     public function cleartmp() {
-        $oConf   = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $sShopId = $oConf->getShopId();
+        $config   = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $sShopId = $config->getShopId();
 
-        $execCleanup = (bool) $oConf->getRequestParameter('executeCleanup');
-        $remoteHosts = (array) $oConf->getShopConfVar('ocbcleartmpRemoteHosts', null, 'module:ocb_cleartmp');
+        $execCleanup = (bool) \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('executeCleanup');
+        $remoteHosts = (array) $config->getShopConfVar('ocbcleartmpRemoteHosts', null, 'module:ocb_cleartmp');
 
         if (!$execCleanup && 0 < count($remoteHosts)) {
-            $host = parse_url($oConf->getConfigParam('sShopURL'), PHP_URL_HOST);
+            $host = parse_url($config->getConfigParam('sShopURL'), PHP_URL_HOST);
             $this->sendRemoteRequests($host, $remoteHosts);
         }
 
-        $blDevMode = 0;
-        if (false != $oConf->getRequestParameter('devmode')) {
-            $blDevMode = $oConf->getRequestParameter('devmode');
+        $ocbcleartmpDevMode = 0;
+        if (false != \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('devmode')) {
+            $ocbcleartmpDevMode = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('devmode');
         }
-        $oConf->saveShopConfVar('bool', 'blDevMode', $blDevMode, $sShopId, 'module:ocb_cleartmp');
+        $config->saveShopConfVar('bool', 'ocbcleartmpDevMode', $ocbcleartmpDevMode, $sShopId, 'module:ocb_cleartmp');
 
         $this->deleteFiles();
 
@@ -99,7 +99,7 @@ class NavigationController extends NavigationController_parent
      * @return bool
      */
     public function isDevMode() {
-        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('blDevMode', null, 'module:ocb_cleartmp');
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpDevMode', null, 'module:ocb_cleartmp');
     }
 
     /**
@@ -128,9 +128,9 @@ class NavigationController extends NavigationController_parent
      * @return null
      */
     public function deleteFiles() {
-        $oConf   = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $option  = $oConf->getRequestParameter('clearoption');
-        $sTmpDir = realpath($oConf->getShopConfVar('sCompileDir'));
+        $config   = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $option  = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('clearoption');
+        $sTmpDir = realpath($config->getShopConfVar('sCompileDir'));
 
         $aFiles = array();
 
@@ -142,7 +142,7 @@ class NavigationController extends NavigationController_parent
                 $aFiles = glob($sTmpDir . '/ocb_cache/*.json');
                 break;
             case 'language':
-                \OxidEsales\Eshop\Core\Registry::get('oxUtils')->resetLanguageCache();
+                \OxidEsales\Eshop\Core\Registry::getUtils()->resetLanguageCache();
                 break;
             case 'database':
                 $aFiles = glob($sTmpDir . '/*{_allfields_,i18n,_aLocal,allviews}*', GLOB_BRACE);
@@ -152,20 +152,20 @@ class NavigationController extends NavigationController_parent
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
                 if ($this->isPictureCache()) {
-                    $aFiles = array_merge($aFiles, glob($oConf->getPictureDir(false) . 'generated/*'));
+                    $aFiles = array_merge($aFiles, glob($config->getPictureDir(false) . 'generated/*'));
                 }
                 if ($this->isEEVersion()) {
-                    $this->_clearContentCache();
+                    $this->clearContentCache();
                 }
                 break;
             case 'seo':
                 $aFiles = glob($sTmpDir . '/*seo.txt');
                 break;
             case 'picture':
-                $aFiles = glob($oConf->getPictureDir(false) . 'generated/*');
+                $aFiles = glob($config->getPictureDir(false) . 'generated/*');
                 break;
             case 'content':
-                $this->_clearContentCache();
+                $this->clearContentCache();
                 break;
             case 'allMods':
                 $this->removeAllModuleEntriesFromDb();
@@ -183,7 +183,7 @@ class NavigationController extends NavigationController_parent
                 if (is_file($file)) {
                     @unlink($file);
                 } else {
-                    $this->_clearDir($file);
+                    $this->clearDir($file);
                 }
             }
         }
@@ -192,7 +192,8 @@ class NavigationController extends NavigationController_parent
     /**
      * clears the content Cache
      */
-    protected function _clearContentCache() {
+    protected function clearContentCache()
+    {
         /* @var $oCache \oxCache */
         $oCache = oxNew('oxcache');
         $oCache->reset();
@@ -206,12 +207,12 @@ class NavigationController extends NavigationController_parent
      *
      * @return bool
      */
-    public function _clearDir($dir) {
+    public function clearDir($dir) {
         if (is_dir($dir)) {
             $files = array_diff(scandir($dir), array('.', '..'));
             foreach ($files as $file) {
                 if (is_dir("$dir/$file")) {
-                    $this->_clearDir("$dir/$file");
+                    $this->clearDir("$dir/$file");
                 } else {
                     unlink("$dir/$file");
                 }
