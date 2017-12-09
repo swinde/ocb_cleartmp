@@ -37,7 +37,7 @@ class NavigationController extends NavigationController_parent
         $sShopId = $oConf->getShopId();
 
         $execCleanup = (bool) $oConf->getRequestParameter('executeCleanup');
-        $remoteHosts = (array) $oConf->getShopConfVar('aRemoteHosts', null, 'module:ocb_cleartmp');
+        $remoteHosts = (array) $oConf->getShopConfVar('ocbcleartmpRemoteHosts', null, 'module:ocb_cleartmp');
 
         if (!$execCleanup && 0 < count($remoteHosts)) {
             $host = parse_url($oConf->getConfigParam('sShopURL'), PHP_URL_HOST);
@@ -117,7 +117,7 @@ class NavigationController extends NavigationController_parent
      * @return bool
      */
     public function isPictureCache() {
-        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('sPictureClear', null, 'module:ocb_cleartmp');
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpPictureClear', null, 'module:ocb_cleartmp');
     }
 
     /**

@@ -33,7 +33,7 @@ $aModule = array(
         'ocb_header.tpl' => 'oxcom/ocbcleartmp/views/admin/ocb_header.tpl'
     ),
     'settings' => array(
-        array('group' => 'ocbcleartmp_main', 'name' => 'sPictureClear', 'type' => 'bool', 'value' => 'false'),
-        array('group' => 'ocbcleartmp_main', 'name' => 'aRemoteHosts', 'type' => 'arr'),
+        array('group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpPictureClear', 'type' => 'bool', 'value' => 'false'),
+        array('group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpRemoteHosts', 'type' => 'arr'),
     )
 );
