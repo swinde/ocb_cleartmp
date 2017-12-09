@@ -1,6 +1,14 @@
 <?php
 
-class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
+namespace OxCom\OcbClearTmp\Controller\Admin;
+
+/**
+ * Class NavigationController
+ *
+ * @package OxCom\OcbClearTmp\Controller\Admin
+ */
+class NavigationController extends NavigationController_parent
+{
     /**
      * Change the full template as there is no block jet in the header.
      *
@@ -9,7 +17,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
     public function render() {
         $sTpl = parent::render();
 
-        $this->_aViewData['prodmode'] = oxRegistry::getConfig()->isProductiveMode();
+        $this->_aViewData['prodmode'] = \OxidEsales\Eshop\Core\Registry::getConfig()->isProductiveMode();
 
         if ('header.tpl' == $sTpl) {
             return 'ocb_header.tpl';
@@ -25,7 +33,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
      * @return null
      */
     public function cleartmp() {
-        $oConf   = oxRegistry::getConfig();
+        $oConf   = \OxidEsales\Eshop\Core\Registry::getConfig();
         $sShopId = $oConf->getShopId();
 
         $execCleanup = (bool) $oConf->getRequestParameter('executeCleanup');
@@ -91,7 +99,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
      * @return bool
      */
     public function isDevMode() {
-        return oxRegistry::getConfig()->getShopConfVar('blDevMode', null, 'module:ocb_cleartmp');
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('blDevMode', null, 'module:ocb_cleartmp');
     }
 
     /**
@@ -109,7 +117,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
      * @return bool
      */
     public function isPictureCache() {
-        return oxRegistry::getConfig()->getShopConfVar('sPictureClear', null, 'module:ocb_cleartmp');
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('sPictureClear', null, 'module:ocb_cleartmp');
     }
 
     /**
@@ -120,7 +128,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
      * @return null
      */
     public function deleteFiles() {
-        $oConf   = oxRegistry::getConfig();
+        $oConf   = \OxidEsales\Eshop\Core\Registry::getConfig();
         $option  = $oConf->getRequestParameter('clearoption');
         $sTmpDir = realpath($oConf->getShopConfVar('sCompileDir'));
 
@@ -134,7 +142,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
                 $aFiles = glob($sTmpDir . '/ocb_cache/*.json');
                 break;
             case 'language':
-                oxRegistry::get('oxUtils')->resetLanguageCache();
+                \OxidEsales\Eshop\Core\Registry::get('oxUtils')->resetLanguageCache();
                 break;
             case 'database':
                 $aFiles = glob($sTmpDir . '/*{_allfields_,i18n,_aLocal,allviews}*', GLOB_BRACE);
@@ -189,7 +197,7 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
         $oCache = oxNew('oxcache');
         $oCache->reset();
         /* @var $oRpBackend \oxCacheBackend */
-        $oRpBackend = oxRegistry::get('oxCacheBackend');
+        $oRpBackend = \OxidEsales\Eshop\Core\Registry::get('oxCacheBackend');
         $oRpBackend->flush();
     }
 
@@ -218,9 +226,9 @@ class ocb_cleartmp_navigation extends ocb_cleartmp_navigation_parent {
      * Will only work if the developer mode is enabled.
      */
     protected function removeAllModuleEntriesFromDb() {
-        if (false != oxRegistry::getConfig()->getRequestParameter('devmode')) {
-            oxDb::getDb()->execute('DELETE FROM `oxconfig` WHERE `OXVARNAME` LIKE \'%aMod%\';');
-            oxDb::getDb()->execute('DELETE FROM `oxconfig` WHERE `OXVARNAME` LIKE \'%aDisabledModules%\';');
+        if (false != \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('devmode')) {
+            \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute('DELETE FROM `oxconfig` WHERE `OXVARNAME` LIKE \'%aMod%\';');
+            \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute('DELETE FROM `oxconfig` WHERE `OXVARNAME` LIKE \'%aDisabledModules%\';');
         }
     }
 }

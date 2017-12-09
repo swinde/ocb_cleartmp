@@ -11,7 +11,7 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '1.1';
+$sMetadataVersion = '2.0';
 
 /**
  * Module information
@@ -21,19 +21,19 @@ $aModule = array(
     'title'        => 'OXID Cookbook :: Clear tmp',
     'description'  => 'Clear the tmp directory from the backend.',
     'thumbnail'    => 'cookbook.jpg',
-    'version'      => '1.0',
-    'author'       => 'Joscha Krug',
+    'version'      => '2.0',
+    'author'       => 'OXID Community',
     'url'          => 'http://www.oxid-kochbuch.de',
-    'email'        => 'krug@marmalade.de',
+    'email'        => '',
     'extend'       => array(
-        'navigation'    => 'ocb_cleartmp/controllers/admin/ocb_cleartmp_navigation',
-        'oxshopcontrol' => 'ocb_cleartmp/core/ocb_cleartmp_oxshopcontrol',
+        \OxidEsales\Eshop\Application\Controller\Admin\NavigationController::class => \OxCom\OcbClearTmp\Controller\Admin\NavigationController::class,
+        \OxidEsales\Eshop\Core\ShopControl::class => \OxCom\OcbClearTmp\Core\ShopControl::class,
     ),
     'templates' => array(
-        'ocb_header.tpl'     => 'ocb_cleartmp/views/admin/ocb_header.tpl'
+        'ocb_header.tpl' => 'oxcom/ocbcleartmp/views/admin/ocb_header.tpl'
     ),
     'settings' => array(
-        array('group' => 'main', 'name' => 'sPictureClear', 'type' => 'bool', 'value' => 'false'),
-        array('group' => 'main', 'name' => 'aRemoteHosts', 'type' => 'arr'),
+        array('group' => 'ocbcleartmp_main', 'name' => 'sPictureClear', 'type' => 'bool', 'value' => 'false'),
+        array('group' => 'ocbcleartmp_main', 'name' => 'aRemoteHosts', 'type' => 'arr'),
     )
 );

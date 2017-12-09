@@ -1,16 +1,17 @@
 <?php
 
-if (false) {
-    class ocb_cleartmp_oxshopcontrol_parent extends oxShopControl
-    {
-    }
-}
+namespace OxCom\OcbClearTmp\Core;
 
-class ocb_cleartmp_oxshopcontrol extends ocb_cleartmp_oxshopcontrol_parent
+/**
+ * Class ShopControl
+ *
+ * @package OxCom\OcbClearTmp\Core
+ */
+class ShopControl extends ShopControl_parent
 {
     protected function _runOnce()
     {
-        $oConf     = oxRegistry::getConfig();
+        $oConf     = \OxidEsales\Eshop\Core\Registry::getConfig();
         $blDevMode = $oConf->getShopConfVar('blDevMode', null, 'module:ocb_cleartmp');
         
         
