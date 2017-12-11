@@ -2,20 +2,23 @@
   "name": "oxid-community/ocbcleartmp",
   "description": "Clear the tmp directory from the backend. For OXID eShop 6.",
   "type": "oxideshop-module",
-  "keywords": ["oxid", "modules", "eShop", "tmp"],
-  "homepage": "https://www.oxid-esales.com/en/home.html",
+  "keywords": [
+    "oxid",
+    "modules",
+    "admin"
+  ],
+  "homepage": "https://github.com/OXIDprojects/ocb_cleartmp",
   "license": [
-    "GPL-3.0",
-    "proprietary"
+    "GNU"
   ],
   "extra": {
     "oxideshop": {
-        "target-directory": "oxcom/ocbcleartmp"
+      "target-directory": "oxcom/ocbcleartmp"
     }
   },
   "autoload": {
     "psr-4": {
-        "OxCom\\OcbClearTmp\\": "../../../source/modules/oxcom/ocbcleartmp"
+      "OxidCommunity\\OcbClearTmp\\": "../../../source/modules/oxcom/ocbcleartmp"
     }
   }
 }

@@ -1,6 +1,15 @@
 <?php
+/**
+ * @package   ocb_cleartmp
+ * @category  OXID Module
+ * @version   2.0.0
+ * @license   GNU License http://opensource.org/licenses/GNU
+ * @author    Joscha Krug <krug@marmalade.de> / OXID Community
+ * @link      https://github.com/OXIDprojects/adminsearch
+ * @see       https://github.com/OXIDCookbook/ocb_cleartmp
+ */
 
-namespace OxCom\OcbClearTmp\Controller\Admin;
+namespace OxidCommunity\OcbClearTmp\Controller\Admin;
 
 /**
  * Class NavigationController
@@ -9,21 +18,17 @@ namespace OxCom\OcbClearTmp\Controller\Admin;
  */
 class NavigationController extends NavigationController_parent
 {
+
     /**
      * Change the full template as there is no block jet in the header.
      *
      * @return string templatename
      */
-    public function render() {
-        $template = parent::render();
-
+    public function render()
+    {
         $this->_aViewData['prodmode'] = \OxidEsales\Eshop\Core\Registry::getConfig()->isProductiveMode();
 
-        if ('header.tpl' == $template) {
-            return 'ocb_header.tpl';
-        } else {
-            return $template;
-        }
+        return parent::render();
     }
 
     /**
@@ -32,8 +37,9 @@ class NavigationController extends NavigationController_parent
      *
      * @return null
      */
-    public function cleartmp() {
-        $config   = \OxidEsales\Eshop\Core\Registry::getConfig();
+    public function cleartmp()
+    {
+        $config = \OxidEsales\Eshop\Core\Registry::getConfig();
         $sShopId = $config->getShopId();
 
         $execCleanup = (bool) \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('executeCleanup');
@@ -58,11 +64,12 @@ class NavigationController extends NavigationController_parent
     /**
      * Sends a request to remote servers to execute the cleanup on them.
      *
-     * @param string $httpHost
+     * @param string   $httpHost
      * @param string[] $remoteHosts
      */
-    protected function sendRemoteRequests($httpHost, $remoteHosts) {
-        $curl     = curl_init();
+    protected function sendRemoteRequests($httpHost, $remoteHosts)
+    {
+        $curl = curl_init();
         $postBody = rtrim(file_get_contents('php://input'));
         $postBody = rtrim($postBody, '&') . '&executeCleanup=1';
         $options = [
@@ -77,7 +84,7 @@ class NavigationController extends NavigationController_parent
 
         curl_setopt_array($curl, $options);
 
-        $requestUri  = $_SERVER['REQUEST_URI'];
+        $requestUri = $_SERVER['REQUEST_URI'];
         $urlTemplate = "{HOST}{$requestUri}";
 
         foreach ($remoteHosts as $remoteHost) {
@@ -98,7 +105,8 @@ class NavigationController extends NavigationController_parent
      *
      * @return bool
      */
-    public function isDevMode() {
+    public function isDevMode()
+    {
         return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpDevMode', null, 'module:ocb_cleartmp');
     }
 
@@ -107,7 +115,8 @@ class NavigationController extends NavigationController_parent
      *
      * @return bool
      */
-    public function isEEVersion() {
+    public function isEEVersion()
+    {
         return ('EE' === $this->getConfig()->getEdition());
     }
 
@@ -116,7 +125,8 @@ class NavigationController extends NavigationController_parent
      *
      * @return bool
      */
-    public function isPictureCache() {
+    public function isPictureCache()
+    {
         return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpPictureClear', null, 'module:ocb_cleartmp');
     }
 
@@ -127,12 +137,13 @@ class NavigationController extends NavigationController_parent
      *
      * @return null
      */
-    public function deleteFiles() {
-        $config   = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $option  = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('clearoption');
+    public function deleteFiles()
+    {
+        $config = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $option = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('clearoption');
         $sTmpDir = realpath($config->getShopConfVar('sCompileDir'));
 
-        $aFiles = array();
+        $aFiles = [];
 
         switch ($option) {
             case 'smarty':
@@ -172,6 +183,7 @@ class NavigationController extends NavigationController_parent
                 $aFiles = glob($sTmpDir . '/*{.php,.txt}', GLOB_BRACE);
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
+
                 return;
             case 'none':
             default:
@@ -207,9 +219,10 @@ class NavigationController extends NavigationController_parent
      *
      * @return bool
      */
-    public function clearDir($dir) {
+    public function clearDir($dir)
+    {
         if (is_dir($dir)) {
-            $files = array_diff(scandir($dir), array('.', '..'));
+            $files = array_diff(scandir($dir), ['.', '..']);
             foreach ($files as $file) {
                 if (is_dir("$dir/$file")) {
                     $this->clearDir("$dir/$file");
@@ -217,8 +230,10 @@ class NavigationController extends NavigationController_parent
                     unlink("$dir/$file");
                 }
             }
+
             return rmdir($dir);
         }
+
         return false;
     }
 
@@ -226,7 +241,8 @@ class NavigationController extends NavigationController_parent
      * Remove all module entries from the oxConfig table
      * Will only work if the developer mode is enabled.
      */
-    protected function removeAllModuleEntriesFromDb() {
+    protected function removeAllModuleEntriesFromDb()
+    {
         if (false != \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('devmode')) {
             \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute('DELETE FROM `oxconfig` WHERE `OXVARNAME` LIKE \'%aMod%\';');
             \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute('DELETE FROM `oxconfig` WHERE `OXVARNAME` LIKE \'%aDisabledModules%\';');
