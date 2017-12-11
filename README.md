@@ -6,7 +6,7 @@ Version 2.0 proudly presented by [OXID Hackathon 2017](https://openspacer.org/12
 
 ### Module installation via composer
 
-Run **composer require oxid-community/ocbcleartmp** to install the module wirh composer.
+Run **composer require oxid-community/ocbcleartmp** to install the module with composer.
 
 ### Module activation
 

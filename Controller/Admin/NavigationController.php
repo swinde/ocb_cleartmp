@@ -156,10 +156,10 @@ class NavigationController extends NavigationController_parent
                 \OxidEsales\Eshop\Core\Registry::getUtils()->resetLanguageCache();
                 break;
             case 'database':
-                $aFiles = glob($sTmpDir . '/*{_allfields_,i18n,_aLocal,allviews}*', GLOB_BRACE);
+                $aFiles = glob($sTmpDir . '/*{_allfields_,i18n,_aLocal,allviews}*', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
                 break;
             case 'complete':
-                $aFiles = glob($sTmpDir . '/*{.php,.txt}', GLOB_BRACE);
+                $aFiles = glob($sTmpDir . '/*{.php,.txt}', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
                 if ($this->isPictureCache()) {
@@ -180,7 +180,7 @@ class NavigationController extends NavigationController_parent
                 break;
             case 'allMods':
                 $this->removeAllModuleEntriesFromDb();
-                $aFiles = glob($sTmpDir . '/*{.php,.txt}', GLOB_BRACE);
+                $aFiles = glob($sTmpDir . '/*{.php,.txt}', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
 
