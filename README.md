@@ -1,13 +1,24 @@
-OXID Cookbook :: Clear tmp
-=============================
-This module adds a new option in the header to clear the tmp directory from each page.
+Great module proudly presented by [OXID Hackathon 2017](https://openspacer.org/12-oxid-community/185-oxid-hackathon-nuernberg-2017/) ;-)
 
-Version 2.0 proudly presented by [OXID Hackathon 2017](https://openspacer.org/12-oxid-community/185-oxid-hackathon-nuernberg-2017/) ;-)
+Module version for OXID eShop 6. Original module by [OXID cookbook](https://github.com/OXIDCookbook/ocb_cleartmp).
 
-### Module installation via composer
+# Features
 
-Run **composer require oxid-community/ocbcleartmp** to install the module with composer.
+	- clear all/different cache types in shop admin
+  - developer mode -> dont´use cache
 
-### Module activation
+# Installation
 
-Activate module in shop admin backend.
+```
+composer require oxid-community/ocbcleartmp
+```
+
+# Screenshot
+
+![OXID ocbcleartmp](screenshot.png)
+
+
+# Changelog
+
+	2017-12-11  2.0.1 fix GLOB_BRACE musl-based dists
+  2017-12-10	2.0.0 module release
