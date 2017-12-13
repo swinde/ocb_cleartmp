@@ -4,7 +4,7 @@ Module version for OXID eShop 6. Original module by [OXID cookbook](https://gith
 
 # Features
 
-	- clear all/different cache types in shop admin
+  - clear all/different cache types in shop admin
   - developer mode -> dont´use cache
 
 # Installation
