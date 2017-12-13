@@ -20,5 +20,5 @@ composer require oxid-community/ocbcleartmp
 
 # Changelog
 
-	2017-12-11  2.0.1 fix GLOB_BRACE musl-based dists
-  2017-12-10	2.0.0 module release
+* 2017-12-11	2.0.1	fix GLOB_BRACE musl-based dists
+* 2017-12-10	2.0.0	module release
