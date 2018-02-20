@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @package   ocb_cleartmp
@@ -26,6 +25,8 @@ $aLang = [
     'OCB_CLEARTMP_DEVMODE'                    => 'Developer mode',
     'OCB_CLEARTMP_STATICCACHE'                => 'Static cache',
     'OCB_CLEARTMP_MODULES'                    => '!!! entire cache & modules',
+    'SHOP_MODULE_ocbcleartmpDevMode'          => 'Dev mode',
+    'HELP_SHOP_MODULE_ocbcleartmpDevMode'     => 'Tmp folder will be cleared on/before every request.',
     'SHOP_MODULE_ocbcleartmpPictureClear'     => 'Activate image cache deletion',
     'SHOP_MODULE_ocbcleartmpRemoteHosts'      => 'Clear the cache on this hosts too.',
     'HELP_SHOP_MODULE_ocbcleartmpRemoteHosts' => "This as a list of URLs to additional servers, where the cache must be cleared too.<br><br>List format: <code>http://&lt;Server-IP&gt;</code><br>Examples:<blockquote><code>http://192.168.1.10<br>http://192.168.1.11</code></blockquote><p><strong>ATTENTION:</strong> A shared PHP-Session is required.</p>",

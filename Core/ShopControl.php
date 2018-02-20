@@ -26,9 +26,12 @@ class ShopControl extends ShopControl_parent
 
         if ($ocbcleartmpDevMode && !$config->isProductiveMode()) {
             $tmpDirectory = realpath($config->getShopConfVar('sCompileDir'));
-            $fles = glob($tmpDirectory . '{/smarty/,/ocb_cache/,/}*{.php,.txt,.json}', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
-            if (count($fles) > 0) {
-                foreach ($fles as $file) {
+            $aFiles = glob($tmpDirectory . '/smarty/*.php');
+            $aFiles = array_merge($aFiles, glob($tmpDirectory . '/ocb_cache/*.json'));
+            $aFiles = array_merge($aFiles, glob($tmpDirectory . '/*.txt'));
+            $aFiles = array_merge($aFiles, glob($tmpDirectory . '/*.php'));
+            if (count($aFiles) > 0) {
+                foreach ($aFiles as $file) {
                     @unlink($file);
                 }
             }

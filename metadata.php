@@ -31,7 +31,8 @@ $aModule = [
         \OxidEsales\Eshop\Application\Controller\Admin\NavigationController::class => \OxidCommunity\OcbClearTmp\Controller\Admin\NavigationController::class,
     ],
     'settings'    => [
-        ['group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpPictureClear', 'type' => 'bool', 'value' => 'false'],
+        ['group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpDevMode', 'type' => 'bool', 'value' => false],
+        ['group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpPictureClear', 'type' => 'bool', 'value' => false],
         ['group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpRemoteHosts', 'type' => 'arr']
     ],
     'blocks'      => [

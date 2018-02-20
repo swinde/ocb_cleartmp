@@ -35,7 +35,7 @@ class NavigationController extends NavigationController_parent
      * Method that will be called from the frontend
      * and starts the clearing
      *
-     * @return null
+     * @throws \Exception
      */
     public function cleartmp()
     {
@@ -50,7 +50,6 @@ class NavigationController extends NavigationController_parent
             $this->sendRemoteRequests($host, $remoteHosts);
         }
 
-        $ocbcleartmpDevMode = 0;
         if (false != \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('devmode')) {
             $ocbcleartmpDevMode = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('devmode');
         }
@@ -100,20 +99,23 @@ class NavigationController extends NavigationController_parent
         curl_close($curl);
     }
 
+
     /**
      * Check wether the developermode is enabled or not
      *
-     * @return bool
+     * @return object
      */
     public function isDevMode()
     {
         return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpDevMode', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
     }
 
+
     /**
      * Check if shop is Enterprise Edition
      *
      * @return bool
+     * @throws \Exception
      */
     public function isEEVersion()
     {
@@ -123,19 +125,20 @@ class NavigationController extends NavigationController_parent
     /**
      * Check if picture Cache enabled
      *
-     * @return bool
+     * @return object
      */
     public function isPictureCache()
     {
         return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpPictureClear', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
     }
 
+
     /**
      * Method to remove the files from the cache folder
      * and trigger other options
      * depending on the given option
      *
-     * @return null
+     * @throws \Exception
      */
     public function deleteFiles()
     {
@@ -156,10 +159,13 @@ class NavigationController extends NavigationController_parent
                 \OxidEsales\Eshop\Core\Registry::getUtils()->resetLanguageCache();
                 break;
             case 'database':
-                $aFiles = glob($sTmpDir . '/*{_allfields_,i18n,_aLocal,allviews}*', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
+                $aFiles = glob($sTmpDir . '/*allfields*.txt');
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/*allviews*.txt'));
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/*tbdsc*.txt'));
                 break;
             case 'complete':
-                $aFiles = glob($sTmpDir . '/*{.php,.txt}', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
+                $aFiles = glob($sTmpDir . '/*.txt');
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
                 if ($this->isPictureCache()) {
@@ -180,7 +186,8 @@ class NavigationController extends NavigationController_parent
                 break;
             case 'allMods':
                 $this->removeAllModuleEntriesFromDb();
-                $aFiles = glob($sTmpDir . '/*{.php,.txt}', (defined('GLOB_BRACE') ? GLOB_BRACE : 0));
+                $aFiles = glob($sTmpDir . '/*.txt');
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
 
