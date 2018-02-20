@@ -2,7 +2,7 @@
 /**
  * @package   ocb_cleartmp
  * @category  OXID Module
- * @version   2.0.0
+ * @version   2.0.2
  * @license   GNU License http://opensource.org/licenses/GNU
  * @author    Joscha Krug <krug@marmalade.de> / OXID Community
  * @link      https://github.com/OXIDprojects/ocb_cleartmp
@@ -14,7 +14,7 @@ namespace OxidCommunity\OcbClearTmp\Core;
 /**
  * Class ShopControl
  *
- * @package OxCom\OcbClearTmp\Core
+ * @package OxidCommunity\OcbClearTmp\Core
  */
 class ShopControl extends ShopControl_parent
 {
@@ -22,7 +22,7 @@ class ShopControl extends ShopControl_parent
     protected function _runOnce()
     {
         $config = \OxidEsales\Eshop\Core\Registry::getConfig();
-        $ocbcleartmpDevMode = $config->getShopConfVar('ocbcleartmpDevMode', null, 'module:ocb_cleartmp');
+        $ocbcleartmpDevMode = $config->getShopConfVar('ocbcleartmpDevMode', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
 
         if ($ocbcleartmpDevMode && !$config->isProductiveMode()) {
             $tmpDirectory = realpath($config->getShopConfVar('sCompileDir'));

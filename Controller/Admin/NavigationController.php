@@ -2,7 +2,7 @@
 /**
  * @package   ocb_cleartmp
  * @category  OXID Module
- * @version   2.0.0
+ * @version   2.0.2
  * @license   GNU License http://opensource.org/licenses/GNU
  * @author    Joscha Krug <krug@marmalade.de> / OXID Community
  * @link      https://github.com/OXIDprojects/ocb_cleartmp
@@ -14,7 +14,7 @@ namespace OxidCommunity\OcbClearTmp\Controller\Admin;
 /**
  * Class NavigationController
  *
- * @package OxCom\OcbClearTmp\Controller\Admin
+ * @package OxidCommunity\OcbClearTmp\Controller\Admin
  */
 class NavigationController extends NavigationController_parent
 {
@@ -43,7 +43,7 @@ class NavigationController extends NavigationController_parent
         $sShopId = $config->getShopId();
 
         $execCleanup = (bool) \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class)->getRequestParameter('executeCleanup');
-        $remoteHosts = (array) $config->getShopConfVar('ocbcleartmpRemoteHosts', null, 'module:ocb_cleartmp');
+        $remoteHosts = (array) $config->getShopConfVar('ocbcleartmpRemoteHosts', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
 
         if (!$execCleanup && 0 < count($remoteHosts)) {
             $host = parse_url($config->getConfigParam('sShopURL'), PHP_URL_HOST);
@@ -107,7 +107,7 @@ class NavigationController extends NavigationController_parent
      */
     public function isDevMode()
     {
-        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpDevMode', null, 'module:ocb_cleartmp');
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpDevMode', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
     }
 
     /**
@@ -117,7 +117,7 @@ class NavigationController extends NavigationController_parent
      */
     public function isEEVersion()
     {
-        return ('EE' === $this->getConfig()->getEdition());
+        return ('EE' === \OxidEsales\Facts\Facts::getEdition());
     }
 
     /**
@@ -127,7 +127,7 @@ class NavigationController extends NavigationController_parent
      */
     public function isPictureCache()
     {
-        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpPictureClear', null, 'module:ocb_cleartmp');
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('ocbcleartmpPictureClear', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
     }
 
     /**

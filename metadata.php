@@ -2,7 +2,7 @@
 /**
  * @package   ocb_cleartmp
  * @category  OXID Module
- * @version   2.0.0
+ * @version   2.0.2
  * @license   GNU License http://opensource.org/licenses/GNU
  * @author    Joscha Krug <krug@marmalade.de> / OXID Community
  * @link      https://github.com/OXIDprojects/ocb_cleartmp
@@ -22,13 +22,13 @@ $aModule = [
     'title'       => 'OXID Community Cleartmp (by OXID Cookbook)',
     'description' => 'Clear the tmp directory from the backend.',
     'thumbnail'   => 'cookbook.jpg',
-    'version'     => '2.0.0',
+    'version'     => '2.0.2',
     'author'      => 'OXID Community',
-    'url'         => 'https://github.com/OXIDCookbook/ocb_cleartmp',
+    'url'         => 'https://github.com/OXIDprojects/ocb_cleartmp',
     'email'       => '',
     'extend'      => [
-        \OxidEsales\Eshop\Application\Controller\Admin\NavigationController::class => \OxidCommunity\OcbClearTmp\Controller\Admin\NavigationController::class,
         \OxidEsales\Eshop\Core\ShopControl::class                                  => \OxidCommunity\OcbClearTmp\Core\ShopControl::class,
+        \OxidEsales\Eshop\Application\Controller\Admin\NavigationController::class => \OxidCommunity\OcbClearTmp\Controller\Admin\NavigationController::class,
     ],
     'settings'    => [
         ['group' => 'ocbcleartmp_main', 'name' => 'ocbcleartmpPictureClear', 'type' => 'bool', 'value' => 'false'],
