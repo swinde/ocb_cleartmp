@@ -2,7 +2,6 @@
 /**
  * @package   ocb_cleartmp
  * @category  OXID Module
- * @version   2.0.2
  * @license   GNU License http://opensource.org/licenses/GNU
  * @author    Joscha Krug <krug@marmalade.de> / OXID Community
  * @link      https://github.com/OXIDprojects/ocb_cleartmp
@@ -164,6 +163,7 @@ class NavigationController extends NavigationController_parent
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/*tbdsc*.txt'));
                 break;
             case 'complete':
+            	\OxidEsales\Eshop\Core\Registry::getUtils()->resetLanguageCache();
                 $aFiles = glob($sTmpDir . '/*.txt');
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));

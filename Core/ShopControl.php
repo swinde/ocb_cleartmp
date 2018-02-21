@@ -2,7 +2,6 @@
 /**
  * @package   ocb_cleartmp
  * @category  OXID Module
- * @version   2.0.2
  * @license   GNU License http://opensource.org/licenses/GNU
  * @author    Joscha Krug <krug@marmalade.de> / OXID Community
  * @link      https://github.com/OXIDprojects/ocb_cleartmp
@@ -25,6 +24,7 @@ class ShopControl extends ShopControl_parent
         $ocbcleartmpDevMode = $config->getShopConfVar('ocbcleartmpDevMode', \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId(), 'module:ocb_cleartmp');
 
         if ($ocbcleartmpDevMode && !$config->isProductiveMode()) {
+            \OxidEsales\Eshop\Core\Registry::getUtils()->resetLanguageCache();
             $tmpDirectory = realpath($config->getShopConfVar('sCompileDir'));
             $aFiles = glob($tmpDirectory . '/smarty/*.php');
             $aFiles = array_merge($aFiles, glob($tmpDirectory . '/ocb_cache/*.json'));

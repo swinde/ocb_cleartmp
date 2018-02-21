@@ -2,7 +2,6 @@
 /**
  * @package   ocb_cleartmp
  * @category  OXID Module
- * @version   2.0.2
  * @license   GNU License http://opensource.org/licenses/GNU
  * @author    Joscha Krug <krug@marmalade.de> / OXID Community
  * @link      https://github.com/OXIDprojects/ocb_cleartmp
