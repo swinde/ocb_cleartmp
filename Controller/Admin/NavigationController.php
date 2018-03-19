@@ -153,6 +153,7 @@ class NavigationController extends NavigationController_parent
                 break;
             case 'staticcache':
                 $aFiles = glob($sTmpDir . '/ocb_cache/*.json');
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/jkrug_cache/*'));
                 break;
             case 'language':
                 \OxidEsales\Eshop\Core\Registry::getUtils()->resetLanguageCache();
@@ -168,6 +169,7 @@ class NavigationController extends NavigationController_parent
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/jkrug_cache/*'));
                 if ($this->isPictureCache()) {
                     $aFiles = array_merge($aFiles, glob($config->getPictureDir(false) . 'generated/*'));
                 }
@@ -190,6 +192,7 @@ class NavigationController extends NavigationController_parent
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/smarty/*.php'));
                 $aFiles = array_merge($aFiles, glob($sTmpDir . '/ocb_cache/*.json'));
+                $aFiles = array_merge($aFiles, glob($sTmpDir . '/jkrug_cache/*'));
 
                 return;
             case 'none':
