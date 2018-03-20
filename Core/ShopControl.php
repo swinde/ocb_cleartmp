@@ -28,6 +28,7 @@ class ShopControl extends ShopControl_parent
             $tmpDirectory = realpath($config->getShopConfVar('sCompileDir'));
             $aFiles = glob($tmpDirectory . '/smarty/*.php');
             $aFiles = array_merge($aFiles, glob($tmpDirectory . '/ocb_cache/*.json'));
+            $aFiles = array_merge($aFiles, glob($tmpDirectory . '/jkrug_cache/*'));
             $aFiles = array_merge($aFiles, glob($tmpDirectory . '/*.txt'));
             $aFiles = array_merge($aFiles, glob($tmpDirectory . '/*.php'));
             if (count($aFiles) > 0) {
