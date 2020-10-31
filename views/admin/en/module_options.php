@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @package   ocb_cleartmp
