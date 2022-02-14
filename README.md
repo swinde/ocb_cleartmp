@@ -11,3 +11,5 @@ Run **composer require oxid-community/ocbcleartmp** to install the module with c
 ### Module activation
 
 Activate module in shop admin backend.
+
+composer config repo.swinde/ocb_cleartmp:dev-patch_v6 git https://github.com/swinde/ocb_cleartmp
